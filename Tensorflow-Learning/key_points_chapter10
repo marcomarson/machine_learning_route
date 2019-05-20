@@ -1,0 +1,68 @@
+1 - In general you will get more bang for the buck by increasing the number of layers than the number of neurons per layer.
+Unfortunately, as you can see, finding the perfect amount of neurons is still somewhat of a black art.
+
+
+
+2 - A simpler approach is to pick a model with more layers and neurons than you actually need, then use early stopping
+to prevent it from overfitting (and other regularization techniques, especially dropout, as we will see in Chapter 11).
+This has been dubbed the “stretch pants” approach:12 instead of wasting time looking for pants that perfectly match your size,
+just use large stretch pants that will shrink down to the right size.
+
+
+3 - you will rarely have to train such networks from scratch: it is much more common to
+reuse parts of a pretrained state-of-the-art network that performs a similar task.
+Training will be a lot faster and require much less data
+
+
+
+4- Transfer Learning = Not only does this hierarchical architecture help DNNs converge faster to a good sol‐
+ution, it also improves their ability to generalize to new datasets. For example, if you
+have already trained a model to recognize faces in pictures, and you now want to
+train a new neural network to recognize hairstyles, then you can kickstart training by
+reusing the lower layers of the first network. Instead of randomly initializing the
+weights and biases of the first few layers of the new neural network, you can initialize
+them to the value of the weights and biases of the lower layers of the first network.
+This way the network will not have to learn from scratch all the low-level structures
+that occur in most pictures; it will only have to learn the higher-level structures (e.g.,
+hairstyles).
+
+
+5- Number of Hidden Layers : For many problems, you can just begin with a single hidden layer and you will get
+reasonable results. It has actually been shown that an MLP with just one hidden layer
+can model even the most complex functions provided it has enough neurons. For a
+long time, these facts convinced researchers that there was no need to investigate any
+deeper neural networks. But they overlooked the fact that deep networks have a much
+higher parameter eciency than shallow ones: they can model complex functions
+using exponentially fewer neurons than shallow nets, making them much faster to
+train.
+
+
+6- Tune parameters :  It is much better to use randomized search. Another option is to use a tool such as Oscar, which implements more complex
+algorithms to help you find a good set of hyperparameters quickly.
+
+
+
+7- Backpropagation in summary : for each training instance the backpropagation algo‐
+rithm first makes a prediction (forward pass), measures the error, then goes through
+each layer in reverse to measure the error contribution from each connection (reverse
+pass), and finally slightly tweaks the connection weights to reduce the error (Gradient
+Descent step).
+
+
+8 - types of activation function: Logistic Function, step Function
+
+The hyperbolic tangent function tanh (z) = 2σ(2z) – 1
+Just like the logistic function it is S-shaped, continuous, and differentiable, but its
+output value ranges from –1 to 1 (instead of 0 to 1 in the case of the logistic func‐
+tion), which tends to make each layer’s output more or less normalized (i.e., cen‐
+tered around 0) at the beginning of training. This often helps speed up
+convergence.
+
+
+The ReLU function (introduced in Chapter 9)
+ReLU (z) = max (0, z). It is continuous but unfortunately not differentiable at z =
+0 (the slope changes abruptly, which can make Gradient Descent bounce
+around). However, in practice it works very well and has the advantage of being
+fast to compute. Most importantly, the fact that it does not have a maximum out‐
+put value also helps reduce some issues during Gradient Descent (we will come
+back to this in Chapter 11).
